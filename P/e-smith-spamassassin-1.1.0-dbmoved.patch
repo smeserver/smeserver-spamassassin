@@ -1,0 +1,13 @@
+diff -Nur -x '*.orig' -x '*.rej' e-smith-spamassassin-1.1.0/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/60globalWBL mezzanine_patched_e-smith-spamassassin-1.1.0/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/60globalWBL
+--- e-smith-spamassassin-1.1.0/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/60globalWBL	2005-07-17 19:52:46.580795640 -0600
++++ mezzanine_patched_e-smith-spamassassin-1.1.0/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/60globalWBL	2005-07-17 19:52:34.430642744 -0600
+@@ -1,8 +1,7 @@
+ { 
+     use esmith::ConfigDB; 
+     
+-    my $sa_dbase = '/home/e-smith/spamassassin';
+-    my $dbh = esmith::ConfigDB->open_ro($sa_dbase)
++    my $dbh = esmith::ConfigDB->open_ro('spamassassin')
+       || die "Unable to open spamassassin configuration dbase.";
+     my %wbl = $dbh->get('wbl.global')->props;
+     
