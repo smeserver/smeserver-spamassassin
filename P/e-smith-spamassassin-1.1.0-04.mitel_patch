@@ -1,0 +1,80 @@
+Index: e-smith-spamassassin/e-smith-spamassassin.spec
+diff -u e-smith-spamassassin/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/10dns_available:1.1 e-smith-spamassassin/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/10dns_available:1.2
+--- e-smith-spamassassin/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/10dns_available:1.1	Mon Mar 21 21:26:32 2005
++++ e-smith-spamassassin/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/10dns_available	Thu May  5 11:01:10 2005
+@@ -1 +1,3 @@
+-{ "dns_available yes" }
++{
++   return "dns_available " . ($spamassassin{DNSAvailable} || 'yes');
++}
+Index: e-smith-spamassassin/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/10required_hits
+diff -u e-smith-spamassassin/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/10required_hits:1.2 e-smith-spamassassin/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/10required_hits:1.3
+--- e-smith-spamassassin/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/10required_hits:1.2	Mon Jun  9 12:10:30 2003
++++ e-smith-spamassassin/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/10required_hits	Thu May  5 11:01:10 2005
+@@ -1 +1,16 @@
+-{ return "required_hits " . ($spamassassin{required_hits} || 8); }
++{ 
++    my $sens = $spamassassin{Sensitivity} || 'medium';
++
++    my %sens2hits =	( 
++			'veryhigh'	=> 2,
++			'high'		=> 3,
++			'medium' 	=> 5,
++			'low'	 	=> 7,
++			'verylow'	=> 9,
++			);
++
++    my $hits = ($sens eq 'custom') ? $spamassassin{TagLevel}
++				   : $sens2hits{$sens};
++
++    return "required_hits $hits";
++}
+Index: e-smith-spamassassin/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/10skip_rbl_checks
+diff -u e-smith-spamassassin/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/10skip_rbl_checks:1.2 e-smith-spamassassin/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/10skip_rbl_checks:1.3
+--- e-smith-spamassassin/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/10skip_rbl_checks:1.2	Mon Jun  9 12:10:30 2003
++++ e-smith-spamassassin/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/10skip_rbl_checks	Thu May  5 11:01:10 2005
+@@ -1 +1,3 @@
+-{ return "skip_rbl_checks " . ($spamassassin{skip_rbl_checks} || 0); }
++{
++    return "skip_rbl_checks " . ($spamassassin{SkipRBLChecks} || 0); 
++}
+Index: e-smith-spamassassin/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/10use_bayes
+diff -u e-smith-spamassassin/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/10use_bayes:1.1 e-smith-spamassassin/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/10use_bayes:1.2
+--- e-smith-spamassassin/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/10use_bayes:1.1	Mon Mar 21 21:26:32 2005
++++ e-smith-spamassassin/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/10use_bayes	Thu May  5 11:01:10 2005
+@@ -1 +1,3 @@
+-{ "use_bayes 0" }
++{
++    return "use_bayes " . ($spamassassin{UseBayes} || 0);
++}
+Index: e-smith-spamassassin/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/60globalWBL
+diff -u e-smith-spamassassin/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/60globalWBL:1.1 e-smith-spamassassin/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/60globalWBL:1.2
+--- e-smith-spamassassin/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/60globalWBL:1.1	Tue Feb  4 15:53:59 2003
++++ e-smith-spamassassin/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/60globalWBL	Thu May  5 11:01:10 2005
+@@ -6,24 +6,16 @@
+       || die "Unable to open spamassassin configuration dbase.";
+     my %wbl = $dbh->get('wbl.global')->props;
+     
+-    $OUT .= "#---------------------------------------------\n";
+-    $OUT .= "#Global WBL entries via spamassassin          \n";
+-    $OUT .= "#server-manager panel.                        \n";
+-    $OUT .= "#---------------------------------------------\n";
+-    
++    $OUT = '';
+     my $parameter = "";
+     my $value = "";
+     while (($parameter,$value) = each(%wbl)) {
+-   
+         if ($parameter eq "type") {next;}
+  
+         if ($value eq "White") {
+             $OUT .= "whitelist_from " . $parameter . "\n";
+-        }
+-    
+-        else {
++        } elsif ($value eq "Black") {
+             $OUT .= "blacklist_from " . $parameter . "\n";
+         }
+-    
+     } 
+ } 

@@ -1,0 +1,219 @@
+Index: e-smith-spamassassin/e-smith-spamassassin.spec
+diff -u /dev/null e-smith-spamassassin/root/etc/e-smith/db/configuration/defaults/spamassassin/DNSAvailable:1.1
+--- /dev/null	Fri May 13 12:48:58 2005
++++ e-smith-spamassassin/root/etc/e-smith/db/configuration/defaults/spamassassin/DNSAvailable	Fri May 13 12:48:14 2005
+@@ -0,0 +1 @@
++yes
+Index: e-smith-spamassassin/root/etc/e-smith/db/configuration/defaults/spamassassin/RejectLevel
+diff -u /dev/null e-smith-spamassassin/root/etc/e-smith/db/configuration/defaults/spamassassin/RejectLevel:1.1
+--- /dev/null	Fri May 13 12:48:58 2005
++++ e-smith-spamassassin/root/etc/e-smith/db/configuration/defaults/spamassassin/RejectLevel	Fri May 13 12:48:14 2005
+@@ -0,0 +1 @@
++20
+Index: e-smith-spamassassin/root/etc/e-smith/db/configuration/defaults/spamassassin/ReportSafe
+diff -u /dev/null e-smith-spamassassin/root/etc/e-smith/db/configuration/defaults/spamassassin/ReportSafe:1.1
+--- /dev/null	Fri May 13 12:48:58 2005
++++ e-smith-spamassassin/root/etc/e-smith/db/configuration/defaults/spamassassin/ReportSafe	Fri May 13 12:48:14 2005
+@@ -0,0 +1 @@
++0
+Index: e-smith-spamassassin/root/etc/e-smith/db/configuration/defaults/spamassassin/Sensitivity
+diff -u /dev/null e-smith-spamassassin/root/etc/e-smith/db/configuration/defaults/spamassassin/Sensitivity:1.1
+--- /dev/null	Fri May 13 12:48:58 2005
++++ e-smith-spamassassin/root/etc/e-smith/db/configuration/defaults/spamassassin/Sensitivity	Fri May 13 12:48:14 2005
+@@ -0,0 +1 @@
++medium
+Index: e-smith-spamassassin/root/etc/e-smith/db/configuration/defaults/spamassassin/SkipRBLChecks
+diff -u /dev/null e-smith-spamassassin/root/etc/e-smith/db/configuration/defaults/spamassassin/SkipRBLChecks:1.1
+--- /dev/null	Fri May 13 12:48:58 2005
++++ e-smith-spamassassin/root/etc/e-smith/db/configuration/defaults/spamassassin/SkipRBLChecks	Fri May 13 12:48:14 2005
+@@ -0,0 +1 @@
++0
+Index: e-smith-spamassassin/root/etc/e-smith/db/configuration/defaults/spamassassin/SortSpam
+diff -u /dev/null e-smith-spamassassin/root/etc/e-smith/db/configuration/defaults/spamassassin/SortSpam:1.1
+--- /dev/null	Fri May 13 12:48:58 2005
++++ e-smith-spamassassin/root/etc/e-smith/db/configuration/defaults/spamassassin/SortSpam	Fri May 13 12:48:14 2005
+@@ -0,0 +1 @@
++enabled
+Index: e-smith-spamassassin/root/etc/e-smith/db/configuration/defaults/spamassassin/Subject
+diff -u /dev/null e-smith-spamassassin/root/etc/e-smith/db/configuration/defaults/spamassassin/Subject:1.1
+--- /dev/null	Fri May 13 12:48:58 2005
++++ e-smith-spamassassin/root/etc/e-smith/db/configuration/defaults/spamassassin/Subject	Fri May 13 12:48:14 2005
+@@ -0,0 +1 @@
++[SPAM]
+Index: e-smith-spamassassin/root/etc/e-smith/db/configuration/defaults/spamassassin/SubjectTag
+diff -u /dev/null e-smith-spamassassin/root/etc/e-smith/db/configuration/defaults/spamassassin/SubjectTag:1.1
+--- /dev/null	Fri May 13 12:48:58 2005
++++ e-smith-spamassassin/root/etc/e-smith/db/configuration/defaults/spamassassin/SubjectTag	Fri May 13 12:48:14 2005
+@@ -0,0 +1 @@
++disabled
+Index: e-smith-spamassassin/root/etc/e-smith/db/configuration/defaults/spamassassin/TagLevel
+diff -u /dev/null e-smith-spamassassin/root/etc/e-smith/db/configuration/defaults/spamassassin/TagLevel:1.1
+--- /dev/null	Fri May 13 12:48:58 2005
++++ e-smith-spamassassin/root/etc/e-smith/db/configuration/defaults/spamassassin/TagLevel	Fri May 13 12:48:14 2005
+@@ -0,0 +1 @@
++5
+Index: e-smith-spamassassin/root/etc/e-smith/db/configuration/defaults/spamassassin/UseBayes
+diff -u /dev/null e-smith-spamassassin/root/etc/e-smith/db/configuration/defaults/spamassassin/UseBayes:1.1
+--- /dev/null	Fri May 13 12:48:58 2005
++++ e-smith-spamassassin/root/etc/e-smith/db/configuration/defaults/spamassassin/UseBayes	Fri May 13 12:48:14 2005
+@@ -0,0 +1 @@
++0
+Index: e-smith-spamassassin/root/etc/e-smith/db/configuration/migrate/10spamassassin
+diff -u /dev/null e-smith-spamassassin/root/etc/e-smith/db/configuration/migrate/10spamassassin:1.1
+--- /dev/null	Fri May 13 12:48:58 2005
++++ e-smith-spamassassin/root/etc/e-smith/db/configuration/migrate/10spamassassin	Fri May 13 12:48:14 2005
+@@ -0,0 +1,27 @@
++{
++    my $sa = $DB->get("spamassassin") or return;
++
++    my %old2new = ( 
++		    required_hits	=> "TagLevel",
++		    skip_rbl_checks	=> "SkipRBLChecks",
++		    sort_spam		=> "SortSpam",
++		    use_bayes		=> "UseBayes",
++		);
++
++    for my $key (keys %old2new)
++    {
++	next unless (exists $spamassassin{$key});
++
++	my $value = $DB->get_prop_and_delete('spamassassin', $key);
++
++	$DB->set_prop('spamassassin', $old2new{$key}, $value);
++    }
++
++    my $value = $DB->get_prop_and_delete('spamassassin', 'rewrite_subject');
++
++    if (defined $value)
++    {
++	$DB->set_prop('spamassassin', 'SubjectTag', 
++	    ($value ? 'enabled' : 'disabled'));
++    }
++}
+Index: e-smith-spamassassin/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/10report_safe
+diff -u /dev/null e-smith-spamassassin/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/10report_safe:1.1
+--- /dev/null	Fri May 13 12:48:58 2005
++++ e-smith-spamassassin/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/10report_safe	Fri May 13 12:48:15 2005
+@@ -0,0 +1,3 @@
++{
++    return "report_safe " .  ($spamassassin{ReportSafe} || 0);
++}
+Index: e-smith-spamassassin/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/10rewrite_subject
+diff -u /dev/null e-smith-spamassassin/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/10rewrite_subject:1.4
+--- /dev/null	Fri May 13 12:48:58 2005
++++ e-smith-spamassassin/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/10rewrite_subject	Fri May 13 12:48:15 2005
+@@ -0,0 +1,7 @@
++{
++    return "" unless ($spamassassin{SubjectTag} eq 'enabled');
++
++    return "" unless ($spamassassin{Subject});
++
++    return "rewrite_header Subject $spamassassin{Subject}";
++}
+Index: e-smith-spamassassin/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/10trusted_networks
+diff -u /dev/null e-smith-spamassassin/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/10trusted_networks:1.1
+--- /dev/null	Fri May 13 12:48:58 2005
++++ e-smith-spamassassin/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/10trusted_networks	Fri May 13 12:48:15 2005
+@@ -0,0 +1,4 @@
++{
++    $OUT = "clear_trusted_networks\n";
++    $OUT .= "trusted_networks " . ($spamassassin{TrustedNetworks} || '127.');
++}
+Index: e-smith-spamassassin/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/40customScore_BAYES_00
+diff -u /dev/null e-smith-spamassassin/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/40customScore_BAYES_00:1.1
+--- /dev/null	Fri May 13 12:48:58 2005
++++ e-smith-spamassassin/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/40customScore_BAYES_00	Fri May 13 12:48:15 2005
+@@ -0,0 +1 @@
++score BAYES_00 { $spamassassin{BAYES_00} || '-1.000' }
+Index: e-smith-spamassassin/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/40customScore_BAYES_05
+diff -u /dev/null e-smith-spamassassin/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/40customScore_BAYES_05:1.1
+--- /dev/null	Fri May 13 12:48:58 2005
++++ e-smith-spamassassin/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/40customScore_BAYES_05	Fri May 13 12:48:15 2005
+@@ -0,0 +1 @@
++score BAYES_05 { $spamassassin{BAYES_05} || '-0.750' }
+Index: e-smith-spamassassin/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/40customScore_BAYES_20
+diff -u /dev/null e-smith-spamassassin/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/40customScore_BAYES_20:1.1
+--- /dev/null	Fri May 13 12:48:58 2005
++++ e-smith-spamassassin/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/40customScore_BAYES_20	Fri May 13 12:48:15 2005
+@@ -0,0 +1 @@
++score BAYES_20 { $spamassassin{BAYES_20} || '-0.250' }
+Index: e-smith-spamassassin/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/40customScore_BAYES_40
+diff -u /dev/null e-smith-spamassassin/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/40customScore_BAYES_40:1.1
+--- /dev/null	Fri May 13 12:48:58 2005
++++ e-smith-spamassassin/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/40customScore_BAYES_40	Fri May 13 12:48:15 2005
+@@ -0,0 +1 @@
++score BAYES_40 { $spamassassin{BAYES_40} || '0.100' }
+Index: e-smith-spamassassin/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/40customScore_BAYES_50
+diff -u /dev/null e-smith-spamassassin/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/40customScore_BAYES_50:1.1
+--- /dev/null	Fri May 13 12:48:58 2005
++++ e-smith-spamassassin/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/40customScore_BAYES_50	Fri May 13 12:48:15 2005
+@@ -0,0 +1 @@
++score BAYES_50 { $spamassassin{BAYES_50} || '1.500' }
+Index: e-smith-spamassassin/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/40customScore_BAYES_60
+diff -u /dev/null e-smith-spamassassin/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/40customScore_BAYES_60:1.1
+--- /dev/null	Fri May 13 12:48:58 2005
++++ e-smith-spamassassin/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/40customScore_BAYES_60	Fri May 13 12:48:15 2005
+@@ -0,0 +1 @@
++score BAYES_60 { $spamassassin{BAYES_60} || '2.500' }
+Index: e-smith-spamassassin/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/40customScore_BAYES_80
+diff -u /dev/null e-smith-spamassassin/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/40customScore_BAYES_80:1.1
+--- /dev/null	Fri May 13 12:48:58 2005
++++ e-smith-spamassassin/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/40customScore_BAYES_80	Fri May 13 12:48:15 2005
+@@ -0,0 +1 @@
++score BAYES_80 { $spamassassin{BAYES_80} || '3.500' }
+Index: e-smith-spamassassin/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/40customScore_BAYES_90
+diff -u /dev/null e-smith-spamassassin/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/40customScore_BAYES_90:1.1
+--- /dev/null	Fri May 13 12:48:58 2005
++++ e-smith-spamassassin/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/40customScore_BAYES_90	Fri May 13 12:48:15 2005
+@@ -0,0 +1 @@
++score BAYES_90 { $spamassassin{BAYES_90} || '4.000' }
+Index: e-smith-spamassassin/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/40customScore_BAYES_99
+diff -u /dev/null e-smith-spamassassin/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/40customScore_BAYES_99:1.1
+--- /dev/null	Fri May 13 12:48:58 2005
++++ e-smith-spamassassin/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/40customScore_BAYES_99	Fri May 13 12:48:15 2005
+@@ -0,0 +1 @@
++score BAYES_99 { $spamassassin{BAYES_99} || '4.500' }
+Index: e-smith-spamassassin/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/40customScore_DCC_CHECK
+diff -u /dev/null e-smith-spamassassin/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/40customScore_DCC_CHECK:1.1
+--- /dev/null	Fri May 13 12:48:58 2005
++++ e-smith-spamassassin/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/40customScore_DCC_CHECK	Fri May 13 12:48:15 2005
+@@ -0,0 +1 @@
++score DCC_CHECK { $spamassassin{DCC_CHECK} || '3.500' }
+Index: e-smith-spamassassin/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/40customScore_RAZOR2_CF_RANGE_51_100
+diff -u /dev/null e-smith-spamassassin/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/40customScore_RAZOR2_CF_RANGE_51_100:1.1
+--- /dev/null	Fri May 13 12:48:58 2005
++++ e-smith-spamassassin/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/40customScore_RAZOR2_CF_RANGE_51_100	Fri May 13 12:48:15 2005
+@@ -0,0 +1 @@
++score RAZOR2_CF_RANGE_51_100 { $spamassassin{RAZOR2_CF_RANGE_51_100} || '2.500' }
+Index: e-smith-spamassassin/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/40customScore_RAZOR2_CHECK
+diff -u /dev/null e-smith-spamassassin/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/40customScore_RAZOR2_CHECK:1.1
+--- /dev/null	Fri May 13 12:48:58 2005
++++ e-smith-spamassassin/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/40customScore_RAZOR2_CHECK	Fri May 13 12:48:15 2005
+@@ -0,0 +1 @@
++score RAZOR2_CHECK { $spamassassin{RAZOR2_CHECK} || '2.500' }
+Index: e-smith-spamassassin/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/40customScore_RCVD_IN_BL_SPAMCOP_NET
+diff -u /dev/null e-smith-spamassassin/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/40customScore_RCVD_IN_BL_SPAMCOP_NET:1.4
+--- /dev/null	Fri May 13 12:48:58 2005
++++ e-smith-spamassassin/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/40customScore_RCVD_IN_BL_SPAMCOP_NET	Fri May 13 12:48:15 2005
+@@ -0,0 +1 @@
++score RCVD_IN_BL_SPAMCOP_NET { $spamassassin{SPAMCOP_NET} || '3.000' }
+Index: e-smith-spamassassin/root/etc/e-smith/templates-user/.qmail/15sortspam
+diff -u /dev/null e-smith-spamassassin/root/etc/e-smith/templates-user/.qmail/15sortspam:1.1
+--- /dev/null	Fri May 13 12:48:58 2005
++++ e-smith-spamassassin/root/etc/e-smith/templates-user/.qmail/15sortspam	Fri May 13 12:48:15 2005
+@@ -0,0 +1,15 @@
++{
++    use esmith::AccountsDB;
++
++    my $db = esmith::AccountsDB->open_ro or return "# AccountsDB: open failed";
++
++    my $user = $db->get($USERNAME) or return "# AccountsDB: No user $USERNAME";
++
++    my $do_sortspam = $user->prop('SortSpam') 
++                        || $spamassassin{SortSpam} 
++                        || "enabled";
++
++    return "# sortspam disabled" unless ($do_sortspam eq "enabled");
++
++    return "| sortspam";
++}
