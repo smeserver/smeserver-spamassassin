@@ -2,7 +2,7 @@ Summary: e-smith server and gateway - spamassassin anti-spam module
 %define name e-smith-spamassassin
 Name: %{name}
 %define version 1.1.0
-%define release 07sme01
+%define release 08
 Version: %{version}
 Release: %{release}
 License: GPL
@@ -14,7 +14,7 @@ Patch1: e-smith-spamassassin-1.1.0-04.mitel_patch
 Patch2: e-smith-spamassassin-1.1.0-05.mitel_patch
 Patch3: e-smith-spamassassin-1.1.0-06.mitel_patch
 Patch4: e-smith-spamassassin-1.1.0-07.mitel_patch
-Patch5: e-smith-spamassassin-1.1.0-dbmoved.patch
+Patch5: e-smith-spamassassin-1.1.0-08.mitel_patch
 Packager: e-smith developers <bugs@e-smith.com>
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: e-smith-email >= 4.13.0-38
@@ -33,9 +33,9 @@ AutoReqProv: no
 e-smith server and gateway software - spamassassin anti-spam module
 
 %changelog
-* Sun Jul 17 2005 Shad L. Lords <slords@mail.com>
-- [1.1.0-07sme01]
-- Prepare for moving DBs
+* Tue Aug  2 2005 Shad Lords <slords@email.com>
+- [1.1.0-08]
+- Prepare for change of default database location. [SF: 1216546]
 
 * Tue May 31 2005 Charlie Brady <charlieb@e-smith.com>
 - [1.1.0-07]
