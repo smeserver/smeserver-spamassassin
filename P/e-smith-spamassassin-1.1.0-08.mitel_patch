@@ -1,0 +1,14 @@
+Index: e-smith-spamassassin/e-smith-spamassassin.spec
+diff -u e-smith-spamassassin/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/60globalWBL:1.2 e-smith-spamassassin/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/60globalWBL:1.3
+--- e-smith-spamassassin/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/60globalWBL:1.2	Thu May  5 11:01:10 2005
++++ e-smith-spamassassin/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/60globalWBL	Tue Aug  2 17:18:50 2005
+@@ -1,8 +1,7 @@
+ { 
+     use esmith::ConfigDB; 
+     
+-    my $sa_dbase = '/home/e-smith/spamassassin';
+-    my $dbh = esmith::ConfigDB->open_ro($sa_dbase)
++    my $dbh = esmith::ConfigDB->open_ro('spamassassin')
+       || die "Unable to open spamassassin configuration dbase.";
+     my %wbl = $dbh->get('wbl.global')->props;
+     
