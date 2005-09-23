@@ -1,0 +1,16 @@
+diff -Nur -x '*.orig' -x '*.rej' e-smith-spamassassin-1.1.0/root/etc/e-smith/templates-user/.qmail/15sortspam mezzanine_patched_e-smith-spamassassin-1.1.0/root/etc/e-smith/templates-user/.qmail/15sortspam
+--- e-smith-spamassassin-1.1.0/root/etc/e-smith/templates-user/.qmail/15sortspam	2005-09-23 04:34:38.572508248 -0600
++++ mezzanine_patched_e-smith-spamassassin-1.1.0/root/etc/e-smith/templates-user/.qmail/15sortspam	2005-09-23 04:34:31.288615568 -0600
+@@ -1,11 +1,5 @@
+ {
+-    use esmith::AccountsDB;
+-
+-    my $db = esmith::AccountsDB->open_ro or return "# AccountsDB: open failed";
+-
+-    my $user = $db->get($USERNAME) or return "# AccountsDB: No user $USERNAME";
+-
+-    my $do_sortspam = $user->prop('SortSpam') 
++    my $do_sortspam = $props{SortSpam}
+                         || $spamassassin{SortSpam} 
+                         || "enabled";
+ 

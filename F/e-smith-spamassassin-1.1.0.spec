@@ -2,7 +2,7 @@ Summary: e-smith server and gateway - spamassassin anti-spam module
 %define name e-smith-spamassassin
 Name: %{name}
 %define version 1.1.0
-%define release 08
+%define release 08sme01
 Version: %{version}
 Release: %{release}
 License: GPL
@@ -15,12 +15,14 @@ Patch2: e-smith-spamassassin-1.1.0-05.mitel_patch
 Patch3: e-smith-spamassassin-1.1.0-06.mitel_patch
 Patch4: e-smith-spamassassin-1.1.0-07.mitel_patch
 Patch5: e-smith-spamassassin-1.1.0-08.mitel_patch
+Patch6: e-smith-spamassassin-1.1.0-SimplifyDotQmail.patch
 Packager: e-smith developers <bugs@e-smith.com>
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: e-smith-email >= 4.13.0-38
 Requires: spamassassin ucspi-tcp daemontools
 Requires: e-smith-lib >= 1.13.1-90
 Requires: e-smith-base >= 4.13.16
+Requires: e-smith-qmail >= 1.9.0-09sme02
 Requires: perl(Net::DNS) >= 0.34-1
 Requires: razor-agents >= 2.61-1
 Requires: DCC
@@ -33,6 +35,11 @@ AutoReqProv: no
 e-smith server and gateway software - spamassassin anti-spam module
 
 %changelog
+* Fri Sep 23 2005 Gordon Rowell <gordonr@gormand.com.au>
+- [1.1.0-08sme01]
+- Simplify .qmail template fragment and add Requires header
+  for recent e-smith-qmail since we need 00setup from it [SF: 1252336]
+
 * Tue Aug  2 2005 Shad Lords <slords@email.com>
 - [1.1.0-08]
 - Prepare for change of default database location. [SF: 1216546]
@@ -270,6 +277,7 @@ e-smith server and gateway software - spamassassin anti-spam module
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
 
 %build
 perl createlinks
