@@ -2,7 +2,7 @@ Summary: SME Server - spamassassin anti-spam module
 %define name smeserver-spamassassin
 Name: %{name}
 %define version 1.3.0
-%define release 02
+%define release 03
 Version: %{version}
 Release: %{release}
 License: GPL
@@ -10,6 +10,7 @@ Vendor: Mitel Networks Corporation
 Group: Networking/Daemons
 Source: %{name}-%{version}.tar.gz
 Patch0: smeserver-spamassassin-1.3.0-sortspam.patch
+Patch1: smeserver-spamassassin-1.3.0-sortspamprop.patch
 Packager: Gordon Rowell <gordonr@gormand.com.au>
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: e-smith-email >= 4.13.0-38
@@ -31,6 +32,9 @@ AutoReqProv: no
 SME Server - spamassassin anti-spam module
 
 %changelog
+* Mon Oct 10 2005 Gordon Rowell <gordonr@gormand.com.au> 1.3.0-03
+- Migrate SortSpam property from 0/1 to disabled/enabled [SF: 1321319]
+
 * Fri Oct 7 2005 Gordon Rowell <gordonr@gormand.com.au> 1.3.0-02
 - Clear qmail{DeliveryInstruction} and qmail{DeliveryType} if
   they were set for the obsoleted sortspam [SF: 1315596]
@@ -276,6 +280,7 @@ SME Server - spamassassin anti-spam module
 %prep
 %setup
 %patch0 -p1
+%patch1 -p1
 
 %build
 perl createlinks
