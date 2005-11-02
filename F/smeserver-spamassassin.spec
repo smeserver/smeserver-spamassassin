@@ -2,7 +2,7 @@ Summary: SME Server - spamassassin anti-spam module
 %define name smeserver-spamassassin
 Name: %{name}
 %define version 1.3.0
-%define release 03
+%define release 03sme01
 Version: %{version}
 Release: %{release}
 License: GPL
@@ -11,6 +11,7 @@ Group: Networking/Daemons
 Source: %{name}-%{version}.tar.gz
 Patch0: smeserver-spamassassin-1.3.0-sortspam.patch
 Patch1: smeserver-spamassassin-1.3.0-sortspamprop.patch
+Patch100: smeserver-spamassassin-1.3.0-ifenabled.patch
 Packager: Gordon Rowell <gordonr@gormand.com.au>
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: e-smith-email >= 4.13.0-38
@@ -32,6 +33,9 @@ AutoReqProv: no
 SME Server - spamassassin anti-spam module
 
 %changelog
+* Wed Nov 02 2005 Filippo Carletti <carletti@mobilia.it> 1.3.0-03sme01
+- Start spamd only if spam filter is enabled [SF: 1312897]
+
 * Mon Oct 10 2005 Gordon Rowell <gordonr@gormand.com.au> 1.3.0-03
 - Migrate SortSpam property from 0/1 to disabled/enabled [SF: 1321319]
 
@@ -281,6 +285,7 @@ SME Server - spamassassin anti-spam module
 %setup
 %patch0 -p1
 %patch1 -p1
+%patch100 -p1
 
 %build
 perl createlinks

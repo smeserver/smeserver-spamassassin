@@ -16,3 +16,10 @@ Mon Oct 10 11:36:02 2005                       Gordon Rowell (gordonr)
 Fix up property mismatch
 
 ----------------------------------------------------------------------
+Thu Nov  3 03:21:17 2005                  Filippo Carletti (fcarletti)
+
+Start spamd only if spam filter is enabled [SF 1312897]
+
+Thu Nov  3 03:21:17 2005                  Filippo Carletti (fcarletti)
+
+----------------------------------------------------------------------
