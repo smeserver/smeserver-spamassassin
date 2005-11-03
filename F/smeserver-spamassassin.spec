@@ -2,7 +2,7 @@ Summary: SME Server - spamassassin anti-spam module
 %define name smeserver-spamassassin
 Name: %{name}
 %define version 1.3.0
-%define release 03sme01
+%define release 03sme02
 Version: %{version}
 Release: %{release}
 License: GPL
@@ -12,6 +12,7 @@ Source: %{name}-%{version}.tar.gz
 Patch0: smeserver-spamassassin-1.3.0-sortspam.patch
 Patch1: smeserver-spamassassin-1.3.0-sortspamprop.patch
 Patch100: smeserver-spamassassin-1.3.0-ifenabled.patch
+Patch101: smeserver-spamassassin-1.3.0-ifenabled2.patch
 Packager: Gordon Rowell <gordonr@gormand.com.au>
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: e-smith-email >= 4.13.0-38
@@ -33,6 +34,9 @@ AutoReqProv: no
 SME Server - spamassassin anti-spam module
 
 %changelog
+* Thu Nov 03 2005 Filippo Carletti <carletti@mobilia.it> 1.3.0-03sme02
+- Avoid runit spinning if spamd is disabled [SF: 1312897]
+
 * Wed Nov 02 2005 Filippo Carletti <carletti@mobilia.it> 1.3.0-03sme01
 - Start spamd only if spam filter is enabled [SF: 1312897]
 
@@ -286,6 +290,7 @@ SME Server - spamassassin anti-spam module
 %patch0 -p1
 %patch1 -p1
 %patch100 -p1
+%patch101 -p1
 
 %build
 perl createlinks

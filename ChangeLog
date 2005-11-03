@@ -23,3 +23,9 @@ Start spamd only if spam filter is enabled [SF 1312897]
 Thu Nov  3 03:21:17 2005                  Filippo Carletti (fcarletti)
 
 ----------------------------------------------------------------------
+Fri Nov  4 02:50:50 2005                  Filippo Carletti (fcarletti)
+
+Avoid runit spinning if spamd is disabled [SF: 1312897]
+Fri Nov  4 02:50:50 2005                  Filippo Carletti (fcarletti)
+
+----------------------------------------------------------------------
