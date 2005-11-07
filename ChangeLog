@@ -29,3 +29,9 @@ Avoid runit spinning if spamd is disabled [SF: 1312897]
 Fri Nov  4 02:50:50 2005                  Filippo Carletti (fcarletti)
 
 ----------------------------------------------------------------------
+Tue Nov  8 03:56:26 2005                  Filippo Carletti (fcarletti)
+
+Avoid runit spinning if spamd is disabled [SF: 1312897]
+Tue Nov  8 03:56:26 2005                  Filippo Carletti (fcarletti)
+
+----------------------------------------------------------------------
