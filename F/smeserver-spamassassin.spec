@@ -2,7 +2,7 @@ Summary: SME Server - spamassassin anti-spam module
 %define name smeserver-spamassassin
 Name: %{name}
 %define version 1.3.0
-%define release 04
+%define release 05
 Version: %{version}
 Release: %{release}
 License: GPL
@@ -13,6 +13,7 @@ Patch0: smeserver-spamassassin-1.3.0-sortspam.patch
 Patch1: smeserver-spamassassin-1.3.0-sortspamprop.patch
 Patch2: smeserver-spamassassin-1.3.0-ifenabled.patch
 Patch3: smeserver-spamassassin-1.3.0-ifenabled2.patch
+Patch4: smeserver-spamassassin-1.3.0-whitelistto.patch
 Packager: Gordon Rowell <gordonr@gormand.com.au>
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: e-smith-email >= 4.13.0-38
@@ -34,6 +35,9 @@ AutoReqProv: no
 SME Server - spamassassin anti-spam module
 
 %changelog
+* Sat Jan 28 2006 Shad L. Lords <slords@mail.com> 1.3.0-05
+- Add global white/black lists for to addresses [SME: 594]
+
 * Thu Nov 03 2005 Filippo Carletti <carletti@mobilia.it> 1.3.0-04
 - Avoid runit spinning if spamd is disabled [SF: 1312897]
 
@@ -291,6 +295,7 @@ SME Server - spamassassin anti-spam module
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %build
 perl createlinks
