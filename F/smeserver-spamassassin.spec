@@ -2,7 +2,7 @@ Summary: SME Server - spamassassin anti-spam module
 %define name smeserver-spamassassin
 Name: %{name}
 %define version 1.3.0
-%define release 05
+%define release 06
 Version: %{version}
 Release: %{release}
 License: GPL
@@ -14,6 +14,7 @@ Patch1: smeserver-spamassassin-1.3.0-sortspamprop.patch
 Patch2: smeserver-spamassassin-1.3.0-ifenabled.patch
 Patch3: smeserver-spamassassin-1.3.0-ifenabled2.patch
 Patch4: smeserver-spamassassin-1.3.0-whitelistto.patch
+Patch5: smeserver-spamassassin-1.3.0-wbl.global_to-db.patch
 Packager: Gordon Rowell <gordonr@gormand.com.au>
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: e-smith-email >= 4.13.0-38
@@ -35,6 +36,9 @@ AutoReqProv: no
 SME Server - spamassassin anti-spam module
 
 %changelog
+* Tue Feb 7 2006 Shad L. Lords <slords@mail.com> 1.3.0-06
+- Add db default for wbl.global_to|type [SME: 693]
+
 * Sat Jan 28 2006 Shad L. Lords <slords@mail.com> 1.3.0-05
 - Add global white/black lists for to addresses [SME: 594]
 
@@ -296,6 +300,7 @@ SME Server - spamassassin anti-spam module
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 %build
 perl createlinks
