@@ -2,7 +2,7 @@ Summary: SME Server - spamassassin anti-spam module
 %define name smeserver-spamassassin
 Name: %{name}
 %define version 1.3.0
-%define release 06
+%define release 07
 Version: %{version}
 Release: %{release}
 License: GPL
@@ -15,6 +15,7 @@ Patch2: smeserver-spamassassin-1.3.0-ifenabled.patch
 Patch3: smeserver-spamassassin-1.3.0-ifenabled2.patch
 Patch4: smeserver-spamassassin-1.3.0-whitelistto.patch
 Patch5: smeserver-spamassassin-1.3.0-wbl.global_to-db.patch
+Patch6: smeserver-spamassassin-1.3.0-renamedbayes90_to_bayes95.patch
 Packager: Gordon Rowell <gordonr@gormand.com.au>
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: e-smith-email >= 4.13.0-38
@@ -36,6 +37,10 @@ AutoReqProv: no
 SME Server - spamassassin anti-spam module
 
 %changelog
+* Wed Feb 22 2006 Gavin Weight <gweight@gmail.com> 1.3.0-07
+- Renamed 40customScore_BAYES_90 to 40customScore_BAYES_95,
+  Edited 40customScore_BAYES_95 to change 90 to 95. [SME: 836]
+
 * Tue Feb 7 2006 Shad L. Lords <slords@mail.com> 1.3.0-06
 - Add db default for wbl.global_to|type [SME: 693]
 
@@ -301,6 +306,7 @@ SME Server - spamassassin anti-spam module
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
 
 %build
 perl createlinks
