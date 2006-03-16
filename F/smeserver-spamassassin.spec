@@ -1,21 +1,14 @@
 Summary: SME Server - spamassassin anti-spam module
 %define name smeserver-spamassassin
 Name: %{name}
-%define version 1.3.0
-%define release 07
+%define version 1.4.0
+%define release 01
 Version: %{version}
 Release: %{release}
 License: GPL
 Vendor: Mitel Networks Corporation
 Group: Networking/Daemons
 Source: %{name}-%{version}.tar.gz
-Patch0: smeserver-spamassassin-1.3.0-sortspam.patch
-Patch1: smeserver-spamassassin-1.3.0-sortspamprop.patch
-Patch2: smeserver-spamassassin-1.3.0-ifenabled.patch
-Patch3: smeserver-spamassassin-1.3.0-ifenabled2.patch
-Patch4: smeserver-spamassassin-1.3.0-whitelistto.patch
-Patch5: smeserver-spamassassin-1.3.0-wbl.global_to-db.patch
-Patch6: smeserver-spamassassin-1.3.0-renamedbayes90_to_bayes95.patch
 Packager: Gordon Rowell <gordonr@gormand.com.au>
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: e-smith-email >= 4.13.0-38
@@ -37,6 +30,9 @@ AutoReqProv: no
 SME Server - spamassassin anti-spam module
 
 %changelog
+* Wed Mar 15 2006 Charlie Brady <charlie_brady@mitel.com> 1.4.0-01
+- Roll stable stream version. [SME: 1016]
+
 * Wed Feb 22 2006 Gavin Weight <gweight@gmail.com> 1.3.0-07
 - Renamed 40customScore_BAYES_90 to 40customScore_BAYES_95,
   Edited 40customScore_BAYES_95 to change 90 to 95. [SME: 836]
@@ -300,13 +296,6 @@ SME Server - spamassassin anti-spam module
 
 %prep
 %setup
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
 
 %build
 perl createlinks
