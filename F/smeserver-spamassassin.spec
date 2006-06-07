@@ -2,17 +2,23 @@ Summary: SME Server - spamassassin anti-spam module
 %define name smeserver-spamassassin
 Name: %{name}
 %define version 1.4.0
-%define release 01
+%define release 02
 Version: %{version}
 Release: %{release}
 License: GPL
 Vendor: Mitel Networks Corporation
 Group: Networking/Daemons
 Source: %{name}-%{version}.tar.gz
+Patch1: sa310.patch
 Packager: Gordon Rowell <gordonr@gormand.com.au>
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: e-smith-email >= 4.13.0-38
-Requires: spamassassin ucspi-tcp daemontools
+Requires: spamassassin >= 3.1.0
+Requires: perl-Crypt-OpenSSL-Bignum
+Requires: perl-IO-Socket-INET6
+Requires: perl-IP-Country
+Requires: perl-Net-Ident
+Requires: ucspi-tcp daemontools
 Requires: e-smith-lib >= 1.13.1-90
 Requires: e-smith-base >= 4.13.16
 Requires: e-smith-qmail >= 1.9.0-09sme02
@@ -30,6 +36,9 @@ AutoReqProv: no
 SME Server - spamassassin anti-spam module
 
 %changelog
+* Wed Mar 15 2006 Charlie Brady <charlie_brady@mitel.com> 1.4.0-02
+- Update config for spamassassin 3.10+ [SME: 1548]
+
 * Wed Mar 15 2006 Charlie Brady <charlie_brady@mitel.com> 1.4.0-01
 - Roll stable stream version. [SME: 1016]
 
@@ -296,6 +305,7 @@ SME Server - spamassassin anti-spam module
 
 %prep
 %setup
+%patch1 -p 1
 
 %build
 perl createlinks
@@ -312,7 +322,7 @@ mkdir -p root/var/log/spamd
 
 mkdir -p root/var/service/spamd/env
 
-mkdir -p root/var/spool/spamd
+mkdir -p root/var/spool/spamd/.spamassassin
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -328,6 +338,7 @@ rm -f %{name}-%{version}-%{release}-filelist
     --file /var/service/spamd/log/run 'attr(0755,root,root)' \
     --dir /var/log/spamd 'attr(2750,smelog,smelog)' \
     --dir /var/spool/spamd 'attr(2750,spamd,spamd)' \
+    --dir /var/spool/spamd/.spamassassin 'attr(2750,spamd,spamd)' \
     > %{name}-%{version}-%{release}-filelist
 
 %pre
