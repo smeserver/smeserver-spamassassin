@@ -2,7 +2,7 @@ Summary: SME Server - spamassassin anti-spam module
 %define name smeserver-spamassassin
 Name: %{name}
 %define version 1.4.0
-%define release 03
+%define release 04
 Version: %{version}
 Release: %{release}
 License: GPL
@@ -14,15 +14,15 @@ Packager: Gordon Rowell <gordonr@gormand.com.au>
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: e-smith-email >= 4.13.0-38
 Requires: spamassassin >= 3.1.0
-Requires: perl-Crypt-OpenSSL-Bignum
-Requires: perl-IO-Socket-INET6
-Requires: perl-IP-Country
-Requires: perl-Net-Ident
+Requires: perl(Crypt::OpenSSL::Bignum)
+Requires: perl(IO::Socket::INET6)
+Requires: perl(IP::Country)
+Requires: perl(Net::DNS) >= 0.34-1
+Requires: perl(Net::Ident)
 Requires: ucspi-tcp daemontools
 Requires: e-smith-lib >= 1.13.1-90
 Requires: e-smith-base >= 4.13.16
 Requires: e-smith-qmail >= 1.9.0-09sme02
-Requires: perl(Net::DNS) >= 0.34-1
 Requires: razor-agents >= 2.61-1
 Requires: DCC
 Requires: pyzor
@@ -36,6 +36,9 @@ AutoReqProv: no
 SME Server - spamassassin anti-spam module
 
 %changelog
+* Fri Jun 9 2006 Gordon Rowell <gordonr@gormand.com.au> 1.4.0-04
+- Adjust perl dependencies to perl module rather than RPM [SME: 1548]
+
 * Fri Jun 9 2006 Gordon Rowell <gordonr@gormand.com.au> 1.4.0-03
 - Correct previous changelog and rebuild [SME: 1548]
 
