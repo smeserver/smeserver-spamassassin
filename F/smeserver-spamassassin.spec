@@ -2,7 +2,7 @@ Summary: SME Server - spamassassin anti-spam module
 %define name smeserver-spamassassin
 Name: %{name}
 %define version 1.4.0
-%define release 02
+%define release 03
 Version: %{version}
 Release: %{release}
 License: GPL
@@ -36,7 +36,10 @@ AutoReqProv: no
 SME Server - spamassassin anti-spam module
 
 %changelog
-* Wed Mar 15 2006 Charlie Brady <charlie_brady@mitel.com> 1.4.0-02
+* Fri Jun 9 2006 Gordon Rowell <gordonr@gormand.com.au> 1.4.0-03
+- Correct previous changelog and rebuild [SME: 1548]
+
+* Wed Jun 7 2006 Shad L. Lords <slords@mail.com> 1.4.0-02
 - Update config for spamassassin 3.10+ [SME: 1548]
 
 * Wed Mar 15 2006 Charlie Brady <charlie_brady@mitel.com> 1.4.0-01
