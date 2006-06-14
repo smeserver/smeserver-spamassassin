@@ -2,7 +2,7 @@ Summary: SME Server - spamassassin anti-spam module
 %define name smeserver-spamassassin
 Name: %{name}
 %define version 1.4.0
-%define release 05
+%define release 06
 Version: %{version}
 Release: %{release}
 License: GPL
@@ -11,6 +11,7 @@ Group: Networking/Daemons
 Source: %{name}-%{version}.tar.gz
 Patch1: sa310.patch
 Patch2: auto_whitelist_path.patch
+Patch3: smeserver-spamassassin-1.3.0-AWLToggle.patch
 Packager: Gordon Rowell <gordonr@gormand.com.au>
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: e-smith-email >= 4.13.0-38
@@ -37,6 +38,9 @@ AutoReqProv: no
 SME Server - spamassassin anti-spam module
 
 %changelog
+* Wed Jun 14 2006 Gordon Rowell <gordonr@gormand.com.au> 1.4.0-06
+- Add check for spamassassin{UseAutoWhitelist}, defaulting to 0 (off)
+
 * Fri Jun 9 2006 Shad L. Lords <slords@mail.com> 1.4.0-05
 - Add path/perm for auto_whitelist [SME: 1571]
 
@@ -317,6 +321,7 @@ SME Server - spamassassin anti-spam module
 %setup
 %patch1 -p 1
 %patch2 -p 1
+%patch3 -p 1
 
 %build
 perl createlinks
