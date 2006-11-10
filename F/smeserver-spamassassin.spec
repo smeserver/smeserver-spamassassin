@@ -2,7 +2,7 @@ Summary: SME Server - spamassassin anti-spam module
 %define name smeserver-spamassassin
 Name: %{name}
 %define version 1.4.0
-%define release 08
+%define release 09
 Version: %{version}
 Release: %{release}
 License: GPL
@@ -14,9 +14,11 @@ Patch2: auto_whitelist_path.patch
 Patch3: smeserver-spamassassin-1.3.0-AWLToggle.patch
 Patch4: smeserver-spamassassin-1.3.0-AWLToggle.patch2
 Patch5: smeserver-spamassassin-1.4.0-SpamStatusAtStartOfLine.patch
+Patch6: smeserver-spamassassin-1.4.0-headermatch.patch
 Packager: Gordon Rowell <gordonr@gormand.com.au>
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: e-smith-email >= 4.13.0-38
+Requires: headermatch
 Requires: spamassassin >= 3.1.0
 Requires: perl(Crypt::OpenSSL::Bignum)
 Requires: perl(IO::Socket::INET6)
@@ -40,6 +42,9 @@ AutoReqProv: no
 SME Server - spamassassin anti-spam module
 
 %changelog
+* Fri Nov 10 2006 Gordon Rowell <gordonr@gormand.com.au> 1.4.0-09
+- Only match X-Spam-Status in headers, via headermatch [SME: 1924]
+
 * Thu Jul 13 2006 Gordon Rowell <gordonr@gormand.com.au> 1.4.0-08
 - Anchor X-Spam-Status check to start of line [SME: 1712]
 
@@ -333,6 +338,7 @@ SME Server - spamassassin anti-spam module
 %patch3 -p 1
 %patch4 -p 1
 %patch5 -p 1
+%patch6 -p 1
 
 %build
 perl createlinks
