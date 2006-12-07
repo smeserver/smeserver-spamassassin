@@ -2,9 +2,10 @@ Summary: e-smith server and gateway - spamassassin anti-spam module
 %define name e-smith-spamassassin
 Name: %{name}
 %define version 1.1.0
-%define release 08sme01
+%define release 9
 Version: %{version}
-Release: %{release}
+Release: %smerelease %{release}
+Packager: %{_packager}
 License: GPL
 Vendor: Mitel Networks Corporation
 Group: Networking/Daemons
@@ -16,7 +17,6 @@ Patch3: e-smith-spamassassin-1.1.0-06.mitel_patch
 Patch4: e-smith-spamassassin-1.1.0-07.mitel_patch
 Patch5: e-smith-spamassassin-1.1.0-08.mitel_patch
 Patch6: e-smith-spamassassin-1.1.0-SimplifyDotQmail.patch
-Packager: e-smith developers <bugs@e-smith.com>
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: e-smith-email >= 4.13.0-38
 Requires: spamassassin ucspi-tcp daemontools
@@ -35,6 +35,10 @@ AutoReqProv: no
 e-smith server and gateway software - spamassassin anti-spam module
 
 %changelog
+* Thu Dec 07 2006 Shad L. Lords <slords@mail.com>
+- Update to new release naming.  No functional changes.
+- Make Packager generic
+
 * Fri Sep 23 2005 Gordon Rowell <gordonr@gormand.com.au>
 - [1.1.0-08sme01]
 - Simplify .qmail template fragment and add Requires header
