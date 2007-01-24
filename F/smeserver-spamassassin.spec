@@ -2,7 +2,7 @@ Summary: SME Server - spamassassin anti-spam module
 %define name smeserver-spamassassin
 Name: %{name}
 %define version 1.4.0
-%define release 10
+%define release 11
 Version: %{version}
 Release: %smerelease %{release}
 Packager: %{_packager}
@@ -25,6 +25,8 @@ Requires: perl(IO::Socket::INET6)
 Requires: perl(IP::Country)
 Requires: perl(Net::DNS) >= 0.34-1
 Requires: perl(Net::Ident)
+Requires: perl(Compress::Zlib)
+Requires: perl(Mail::DKIM)
 Requires: ucspi-tcp daemontools
 Requires: e-smith-lib >= 1.13.1-90
 Requires: e-smith-base >= 4.13.16
@@ -42,6 +44,9 @@ AutoReqProv: no
 SME Server - spamassassin anti-spam module
 
 %changelog
+* Wed Jan 24 2007 Shad L. Lords <slords@mail.com> 1.4.0-11
+- Add requires for new spamassassin modules
+
 * Thu Dec 07 2006 Shad L. Lords <slords@mail.com>
 - Update to new release naming.  No functional changes.
 - Make Packager generic
