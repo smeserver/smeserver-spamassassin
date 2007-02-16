@@ -2,7 +2,7 @@ Summary: SME Server - spamassassin anti-spam module
 %define name smeserver-spamassassin
 Name: %{name}
 %define version 1.4.0
-%define release 11
+%define release 12
 Version: %{version}
 Release: %smerelease %{release}
 Packager: %{_packager}
@@ -16,6 +16,7 @@ Patch3: smeserver-spamassassin-1.3.0-AWLToggle.patch
 Patch4: smeserver-spamassassin-1.3.0-AWLToggle.patch2
 Patch5: smeserver-spamassassin-1.4.0-SpamStatusAtStartOfLine.patch
 Patch6: smeserver-spamassassin-1.4.0-headermatch.patch
+Patch7: smeserver-spamassassin-1.4.0-runit17.patch
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: e-smith-email >= 4.13.0-38
 Requires: headermatch
@@ -44,6 +45,9 @@ AutoReqProv: no
 SME Server - spamassassin anti-spam module
 
 %changelog
+* Fri Feb 16 2007 Shad L. Lords <slords@mail.com> 1.4.0-12
+- Change runsvctrl to sv to support runit v1.7.x
+
 * Wed Jan 24 2007 Shad L. Lords <slords@mail.com> 1.4.0-11
 - Add requires for new spamassassin modules
 
@@ -348,6 +352,7 @@ SME Server - spamassassin anti-spam module
 %patch4 -p 1
 %patch5 -p 1
 %patch6 -p 1
+%patch7 -p 1
 
 %build
 perl createlinks
