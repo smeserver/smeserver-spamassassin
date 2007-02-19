@@ -2,7 +2,7 @@ Summary: SME Server - spamassassin anti-spam module
 %define name smeserver-spamassassin
 Name: %{name}
 %define version 1.4.0
-%define release 12
+%define release 13
 Version: %{version}
 Release: %smerelease %{release}
 Packager: %{_packager}
@@ -35,6 +35,7 @@ Requires: e-smith-qmail >= 1.9.0-09sme02
 Requires: razor-agents >= 2.61-1
 Requires: DCC
 Requires: pyzor
+Requires: FuzzyOcr
 Obsoletes: e-smith-spamassassin
 Provides: e-smith-spamassassin
 BuildArchitectures: noarch
@@ -45,6 +46,9 @@ AutoReqProv: no
 SME Server - spamassassin anti-spam module
 
 %changelog
+* Sun Feb 18 2007 Shad L. Lords <slords@mail.com> 1.4.0-13
+- Add FuzzyOcr to spamassassin to detect graphic spam [SME: 1985]
+
 * Fri Feb 16 2007 Shad L. Lords <slords@mail.com> 1.4.0-12
 - Change runsvctrl to sv to support runit v1.7.x
 
