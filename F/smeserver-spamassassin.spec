@@ -4,10 +4,8 @@ Name: %{name}
 %define version 1.4.0
 %define release 13
 Version: %{version}
-Release: %smerelease %{release}
-Packager: %{_packager}
+Release: %{release}%{?dist}
 License: GPL
-Vendor: Mitel Networks Corporation
 Group: Networking/Daemons
 Source: %{name}-%{version}.tar.gz
 Patch1: sa310.patch
@@ -46,6 +44,9 @@ AutoReqProv: no
 SME Server - spamassassin anti-spam module
 
 %changelog
+* Sun Apr 29 2007 Shad L. Lords <slords@mail.com>
+- Clean up spec so package can be built by koji/plague
+
 * Sun Feb 18 2007 Shad L. Lords <slords@mail.com> 1.4.0-13
 - Add FuzzyOcr to spamassassin to detect graphic spam [SME: 1985]
 
