@@ -51,7 +51,7 @@ SME Server - spamassassin anti-spam module
 - Add FuzzyOcr to spamassassin to detect graphic spam [SME: 1985]
 
 * Fri Feb 16 2007 Shad L. Lords <slords@mail.com> 1.4.0-12
-- Change runsvctrl to sv to support runit v1.7.x
+- Change runsvctrl to sv to support runit v1.7.x [SME: 2486]
 
 * Wed Jan 24 2007 Shad L. Lords <slords@mail.com> 1.4.0-11
 - Add requires for new spamassassin modules
