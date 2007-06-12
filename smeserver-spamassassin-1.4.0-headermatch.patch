@@ -1,0 +1,11 @@
+diff -Nur -x '*.orig' -x '*.rej' smeserver-spamassassin-1.4.0/root/etc/e-smith/templates-user/.qmail/15sortspam mezzanine_patched_smeserver-spamassassin-1.4.0/root/etc/e-smith/templates-user/.qmail/15sortspam
+--- smeserver-spamassassin-1.4.0/root/etc/e-smith/templates-user/.qmail/15sortspam	2006-11-10 12:10:10.228219741 +1100
++++ mezzanine_patched_smeserver-spamassassin-1.4.0/root/etc/e-smith/templates-user/.qmail/15sortspam	2006-11-10 12:08:54.826352722 +1100
+@@ -11,5 +11,6 @@
+ 
+     return "# sortspam disabled" unless ($do_sortspam eq "enabled");
+ 
+-    return qq(| condredirect $USERNAME-junkmail /bin/grep -q -i '^X-Spam-Status: Yes');
++    return qq(| condredirect $USERNAME-junkmail headermatch 'X-Spam-Status: Yes');
++
+ }
