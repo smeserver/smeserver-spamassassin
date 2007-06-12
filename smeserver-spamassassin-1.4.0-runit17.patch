@@ -1,0 +1,10 @@
+diff -Nur -x '*.orig' -x '*.rej' smeserver-spamassassin-1.4.0/root/var/service/spamd/run mezzanine_patched_smeserver-spamassassin-1.4.0/root/var/service/spamd/run
+--- smeserver-spamassassin-1.4.0/root/var/service/spamd/run	2006-03-15 17:41:02.000000000 -0700
++++ mezzanine_patched_smeserver-spamassassin-1.4.0/root/var/service/spamd/run	2007-02-16 13:54:54.000000000 -0700
+@@ -26,5 +26,5 @@
+ if [ "$SPAMD_STATUS" == "enabled" ]; then
+     exec /usr/bin/spamd -u spamd --syslog=stderr
+ else
+-    /usr/bin/runsvctrl down .
++    /usr/bin/sv d .
+ fi
