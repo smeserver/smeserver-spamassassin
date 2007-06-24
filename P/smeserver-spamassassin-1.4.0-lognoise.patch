@@ -1,0 +1,19 @@
+diff -Nur -x '*.orig' -x '*.rej' smeserver-spamassassin-1.4.0/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/10ok_languages mezzanine_patched_smeserver-spamassassin-1.4.0/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/10ok_languages
+--- smeserver-spamassassin-1.4.0/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/10ok_languages	2007-06-24 09:06:55.000000000 -0600
++++ mezzanine_patched_smeserver-spamassassin-1.4.0/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/10ok_languages	2007-06-24 09:05:53.000000000 -0600
+@@ -1,3 +1,5 @@
+ {
+-    return "ok_languages " . ($spamassassin{OkLanguages} || 'all');
++    $langs = ($spamassassin{OkLanguages} || 'all');
++    return "" if $langs eq 'all';
++    return "ok_languages $langs";
+ }
+diff -Nur -x '*.orig' -x '*.rej' smeserver-spamassassin-1.4.0/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/10trusted_networks mezzanine_patched_smeserver-spamassassin-1.4.0/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/10trusted_networks
+--- smeserver-spamassassin-1.4.0/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/10trusted_networks	2007-06-24 09:06:55.000000000 -0600
++++ mezzanine_patched_smeserver-spamassassin-1.4.0/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/10trusted_networks	2007-06-24 09:04:05.000000000 -0600
+@@ -1,4 +1,4 @@
+ {
+     $OUT = "clear_trusted_networks\n";
+-    $OUT .= "trusted_networks $LocalIP " . ($spamassassin{TrustedNetworks} || '127.');
++    $OUT .= "trusted_networks $LocalIP " . ($spamassassin{TrustedNetworks} || '');
+ }
