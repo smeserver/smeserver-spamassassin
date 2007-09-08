@@ -2,7 +2,7 @@ Summary: SME Server - spamassassin anti-spam module
 %define name smeserver-spamassassin
 Name: %{name}
 %define version 1.4.0
-%define release 15
+%define release 16
 Version: %{version}
 Release: %{release}%{?dist}
 License: GPL
@@ -17,6 +17,7 @@ Patch6: smeserver-spamassassin-1.4.0-headermatch.patch
 Patch7: smeserver-spamassassin-1.4.0-runit17.patch
 Patch8: smeserver-spamassassin-1.4.0-lognoise.patch
 Patch9: smeserver-spamassassin-1.4.0-sa_update-smefix.patch
+Patch10: smeserver-spamassassin-1.4.0-sa_update-smefix.patch2
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: e-smith-email >= 4.13.0-38
 Requires: headermatch
@@ -46,6 +47,9 @@ AutoReqProv: no
 SME Server - spamassassin anti-spam module
 
 %changelog
+* Sat Sep 8 2007 Shad L. Lords <slords@mail.com> 1.4.0-16
+- Import spamassassin keys correctly [SME: 3206]
+
 * Thu Sep 6 2007 Shad L. Lords <slords@mail.com> 1.4.0-15
 - Import spamassassin keys if sa_update is found [SME: 3206]
 - Restart spamassassin if update successful [SME: 3351]
@@ -369,6 +373,7 @@ SME Server - spamassassin anti-spam module
 %patch7 -p 1
 %patch8 -p 1
 %patch9 -p 1
+%patch10 -p 1
 
 %build
 perl createlinks
