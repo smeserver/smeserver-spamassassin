@@ -1,25 +1,15 @@
+# $Id: smeserver-spamassassin.spec,v 1.7 2008/10/07 14:57:14 slords Exp $
+
 Summary: SME Server - spamassassin anti-spam module
 %define name smeserver-spamassassin
 Name: %{name}
-%define version 1.4.0
-%define release 18
+%define version 2.2.0
+%define release 1
 Version: %{version}
 Release: %{release}%{?dist}
 License: GPL
 Group: Networking/Daemons
 Source: %{name}-%{version}.tar.gz
-Patch1: sa310.patch
-Patch2: auto_whitelist_path.patch
-Patch3: smeserver-spamassassin-1.3.0-AWLToggle.patch
-Patch4: smeserver-spamassassin-1.3.0-AWLToggle.patch2
-Patch5: smeserver-spamassassin-1.4.0-SpamStatusAtStartOfLine.patch
-Patch6: smeserver-spamassassin-1.4.0-headermatch.patch
-Patch7: smeserver-spamassassin-1.4.0-runit17.patch
-Patch8: smeserver-spamassassin-1.4.0-lognoise.patch
-Patch9: smeserver-spamassassin-1.4.0-sa_update-smefix.patch
-Patch10: smeserver-spamassassin-1.4.0-sa_update-smefix.patch2
-Patch11: smeserver-spamassassin-1.4.0-sakeys.patch
-Patch12: smeserver-spamassassin-1.4.0-required_score.patch
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: e-smith-email >= 4.13.0-38
 Requires: headermatch
@@ -49,6 +39,9 @@ AutoReqProv: no
 SME Server - spamassassin anti-spam module
 
 %changelog
+* Tue Oct 7 2008 Shad L. Lords <slords@mail.com> 2.2.0-1.sme
+- Roll new stream to separate sme7/sme8 trees [SME: 4633]
+
 * Sat Mar 9 2008 chris burnat <devlist@burnat.com> 1.4.0-18
 - Edit and rename deprecated template fragment [SME: 3857]  
 
@@ -372,18 +365,6 @@ SME Server - spamassassin anti-spam module
 
 %prep
 %setup
-%patch1 -p 1
-%patch2 -p 1
-%patch3 -p 1
-%patch4 -p 1
-%patch5 -p 1
-%patch6 -p 1
-%patch7 -p 1
-%patch8 -p 1
-%patch9 -p 1
-%patch10 -p 1
-%patch11 -p 1
-%patch12 -p 1
 
 %build
 perl createlinks

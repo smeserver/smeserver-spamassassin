@@ -1,8 +1,0 @@
-diff -Nur -x '*.orig' -x '*.rej' smeserver-spamassassin-1.4.0/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/10use_auto_whitelist mezzanine_patched_smeserver-spamassassin-1.4.0/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/10use_auto_whitelist
---- smeserver-spamassassin-1.4.0/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/10use_auto_whitelist	2006-06-14 11:39:32.839683915 +1000
-+++ mezzanine_patched_smeserver-spamassassin-1.4.0/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/10use_auto_whitelist	2006-06-14 11:39:26.448795577 +1000
-@@ -1,3 +1,3 @@
- {
--    return "use_auto_whitelist" . ($spamassassin{UseAutoWhitelist} || 0);
-+    return "use_auto_whitelist " . ($spamassassin{UseAutoWhitelist} || 0);
- }
