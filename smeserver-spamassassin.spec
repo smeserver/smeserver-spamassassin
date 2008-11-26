@@ -1,15 +1,16 @@
-# $Id: smeserver-spamassassin.spec,v 1.7 2008/10/07 14:57:14 slords Exp $
+# $Id: smeserver-spamassassin.spec,v 1.8 2008/11/26 09:34:44 filippocarletti Exp $
 
 Summary: SME Server - spamassassin anti-spam module
 %define name smeserver-spamassassin
 Name: %{name}
 %define version 2.0.0
-%define release 1
+%define release 2
 Version: %{version}
 Release: %{release}%{?dist}
 License: GPL
 Group: Networking/Daemons
 Source: %{name}-%{version}.tar.gz
+Patch1: smeserver-spamassassin-2.0.0-ServiceNameFix.patch 
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: e-smith-email >= 4.13.0-38
 Requires: headermatch
@@ -39,6 +40,9 @@ AutoReqProv: no
 SME Server - spamassassin anti-spam module
 
 %changelog
+* Tue Nov 25 2008 Giacomo Sanchietti <giacomo@nethesis.it> 2.0.0-2sme
+- Fix invalid service name in sa-update [SME: 3304]
+
 * Tue Oct 7 2008 Shad L. Lords <slords@mail.com> 2.0.0-1.sme
 - Roll new stream to separate sme7/sme8 trees [SME: 4633]
 
@@ -365,6 +369,8 @@ SME Server - spamassassin anti-spam module
 
 %prep
 %setup
+%patch1 -p1
+
 
 %build
 perl createlinks
