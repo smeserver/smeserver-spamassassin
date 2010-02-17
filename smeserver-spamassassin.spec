@@ -1,20 +1,21 @@
-# $Id: smeserver-spamassassin.spec,v 1.8 2008/11/27 09:10:25 filippocarletti Exp $
+# $Id: smeserver-spamassassin.spec,v 1.9 2010/02/17 11:53:42 filippocarletti Exp $
 
 Summary: SME Server - spamassassin anti-spam module
 %define name smeserver-spamassassin
 Name: %{name}
 %define version 2.2.0
-%define release 2
+%define release 3
 Version: %{version}
 Release: %{release}%{?dist}
 License: GPL
 Group: Networking/Daemons
 Source: %{name}-%{version}.tar.gz
 Patch1: smeserver-spamassassin-2.2.0-ServiceNameFix.patch
+Patch2: smeserver-spamassassin-2.2.0-SA330.patch
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: e-smith-email >= 4.13.0-38
 Requires: headermatch
-Requires: spamassassin >= 3.1.0
+Requires: spamassassin >= 3.3.0
 Requires: perl(Crypt::OpenSSL::Bignum)
 Requires: perl(IO::Socket::INET6)
 Requires: perl(IP::Country)
@@ -29,7 +30,7 @@ Requires: e-smith-qmail >= 1.9.0-09sme02
 Requires: razor-agents >= 2.61-1
 Requires: DCC
 Requires: pyzor
-Requires: FuzzyOcr
+Obsoletes: FuzzyOcr
 Obsoletes: e-smith-spamassassin
 Provides: e-smith-spamassassin
 BuildArchitectures: noarch
@@ -40,6 +41,12 @@ AutoReqProv: no
 SME Server - spamassassin anti-spam module
 
 %changelog
+* Tue Feb 16 2010 Filippo Carletti <filippo.carletti@gmail.com> 2.2.0-3sme
+- Requires SpamAssassin 3.3.0 [SME: 5741]
+- Remove FuzzyOcr [SME: 5771]
+- Run sa-update every two hours and check restart every hour
+- Redirect cron job output to logfile to avoid mail noise
+
 * Tue Nov 25 2008 Giacomo Sanchietti <giacomo@nethesis.it> 2.2.0-2sme
 - Fix invalid service name in sa-update [SME: 3304]
 
@@ -370,6 +377,7 @@ SME Server - spamassassin anti-spam module
 %prep
 %setup
 %patch1 -p1
+%patch2 -p1
 
 %build
 perl createlinks
@@ -403,6 +411,7 @@ rm -f %{name}-%{version}-%{release}-filelist
     --dir /var/log/spamd 'attr(2750,smelog,smelog)' \
     --dir /var/spool/spamd 'attr(2750,spamd,spamd)' \
     --dir /var/spool/spamd/.spamassassin 'attr(2750,spamd,spamd)' \
+    --file /etc/cron.hourly/sa-restart 'attr(0755,root,root)' \
     > %{name}-%{version}-%{release}-filelist
 
 %pre

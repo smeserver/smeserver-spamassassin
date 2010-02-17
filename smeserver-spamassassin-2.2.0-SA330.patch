@@ -1,0 +1,100 @@
+diff -Naur smeserver-spamassassin-2.2.0-old/createlinks smeserver-spamassassin-2.2.0/createlinks
+--- smeserver-spamassassin-2.2.0-old/createlinks	2010-02-12 16:47:35.478703134 +0100
++++ smeserver-spamassassin-2.2.0/createlinks	2010-02-16 17:11:46.898238383 +0100
+@@ -13,6 +13,7 @@
+ 
+ templates2events( "/etc/mail/spamassassin/local.cf",
+     qw( bootstrap-console-save email-update ) );
++templates2events( "/etc/cron.d/sa-update", "bootstrap-console-save" );
+ 
+ foreach $event ( qw( bootstrap-console-save email-update ) )
+ {
+diff -Naur smeserver-spamassassin-2.2.0-old/root/etc/cron.d/sa-update.sme smeserver-spamassassin-2.2.0/root/etc/cron.d/sa-update.sme
+--- smeserver-spamassassin-2.2.0-old/root/etc/cron.d/sa-update.sme	1970-01-01 01:00:00.000000000 +0100
++++ smeserver-spamassassin-2.2.0/root/etc/cron.d/sa-update.sme	2010-02-16 16:50:08.403480252 +0100
+@@ -0,0 +1 @@
++3 */2 * * * root /usr/share/spamassassin/sa-update.cron 2>&1 >>/var/log/sa-update.log
+diff -Naur smeserver-spamassassin-2.2.0-old/root/etc/cron.daily/00-sa_keys smeserver-spamassassin-2.2.0/root/etc/cron.daily/00-sa_keys
+--- smeserver-spamassassin-2.2.0-old/root/etc/cron.daily/00-sa_keys	2008-10-07 16:55:26.000000000 +0200
++++ smeserver-spamassassin-2.2.0/root/etc/cron.daily/00-sa_keys	1970-01-01 01:00:00.000000000 +0100
+@@ -1,17 +0,0 @@
+-#!/bin/sh
+-
+-if [ -f /etc/cron.daily/sa_update ]
+-then
+-    install -d -o root -g root -m 600 /etc/mail/spamassassin/sa-update-keys
+-    for key in release-spamassassin.org-key.txt \
+-	       sa-update-openprotect-sare.txt \
+-	       sa-update-pubkey.txt \
+-	       saupdates.openprotect.com-key.txt \
+-	       updates.spamassassin.org-key.txt
+-    do
+-	if [ -f /usr/share/spamassassin/$key ]
+-	then
+-	    /usr/bin/sa-update --import /usr/share/spamassassin/$key
+-	fi
+-    done
+-fi
+diff -Naur smeserver-spamassassin-2.2.0-old/root/etc/cron.daily/zz-sa_restart smeserver-spamassassin-2.2.0/root/etc/cron.daily/zz-sa_restart
+--- smeserver-spamassassin-2.2.0-old/root/etc/cron.daily/zz-sa_restart	2008-10-07 16:55:26.000000000 +0200
++++ smeserver-spamassassin-2.2.0/root/etc/cron.daily/zz-sa_restart	1970-01-01 01:00:00.000000000 +0100
+@@ -1,10 +0,0 @@
+-#!/bin/sh
+-
+-if [ -f /etc/cron.daily/sa_update ]
+-then
+-    N=$(find /var/lib/spamassassin/3.* -type f -newer /service/spamd/supervise/pid)
+-    if test -n "$N"
+-    then
+-        sv t /service/spamd
+-    fi
+-fi
+diff -Naur smeserver-spamassassin-2.2.0-old/root/etc/cron.hourly/sa-restart smeserver-spamassassin-2.2.0/root/etc/cron.hourly/sa-restart
+--- smeserver-spamassassin-2.2.0-old/root/etc/cron.hourly/sa-restart	1970-01-01 01:00:00.000000000 +0100
++++ smeserver-spamassassin-2.2.0/root/etc/cron.hourly/sa-restart	2010-02-16 16:58:32.653570831 +0100
+@@ -0,0 +1,8 @@
++if [ -f /etc/cron.d/sa-update.sme ]
++then
++    N=$(find /var/lib/spamassassin/3.* -type f -newer /service/spamd/supervise/pid)
++    if test -n "$N"
++    then
++        sv t /service/spamd
++    fi
++fi
+diff -Naur smeserver-spamassassin-2.2.0-old/root/etc/e-smith/templates/etc/cron.d/sa-update smeserver-spamassassin-2.2.0/root/etc/e-smith/templates/etc/cron.d/sa-update
+--- smeserver-spamassassin-2.2.0-old/root/etc/e-smith/templates/etc/cron.d/sa-update	1970-01-01 01:00:00.000000000 +0100
++++ smeserver-spamassassin-2.2.0/root/etc/e-smith/templates/etc/cron.d/sa-update	2010-02-16 17:09:58.659818065 +0100
+@@ -0,0 +1,12 @@
++# *** DO NOT MODIFY THIS FILE ***
++### Spamassassin Rules Updates ###
++#
++# http://wiki.apache.org/spamassassin/RuleUpdates
++# 
++# sa-update automatically updates your rules once per day if a spam daemon like
++# spamd or amavisd are running.  You can force sa-update to run in
++# /etc/sysconfig/sa-update
++#
++# /var/log/sa-update.log contains a history log of sa-update runs
++
++10 4 * * * root /usr/share/spamassassin/sa-update.cron 2>&1 >> /var/log/sa-update.log
+diff -Naur smeserver-spamassassin-2.2.0-old/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/10paths smeserver-spamassassin-2.2.0/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/10paths
+--- smeserver-spamassassin-2.2.0-old/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/10paths	2008-10-07 16:55:26.000000000 +0200
++++ smeserver-spamassassin-2.2.0/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/10paths	2010-02-16 11:58:32.150953763 +0100
+@@ -1,4 +1,2 @@
+ bayes_path /var/spool/spamd/.spamassassin/bayes
+ bayes_file_mode 750
+-auto_whitelist_path /var/spool/spamd/.spamassassin/auto-whitelist
+-auto_whitelist_file_mode 750
+diff -Naur smeserver-spamassassin-2.2.0-old/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/10use_auto_whitelist smeserver-spamassassin-2.2.0/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/10use_auto_whitelist
+--- smeserver-spamassassin-2.2.0-old/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/10use_auto_whitelist	2008-10-07 16:55:26.000000000 +0200
++++ smeserver-spamassassin-2.2.0/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/10use_auto_whitelist	2010-02-16 11:58:32.151939426 +0100
+@@ -1,3 +1,8 @@
+ {
+-    return "use_auto_whitelist " . ($spamassassin{UseAutoWhitelist} || 0);
++    if (($spamassassin{UseAutoWhitelist} || "0") eq "1")
++    {
++        $OUT = "use_auto_whitelist 1\n";
++        $OUT .= "auto_whitelist_path /var/spool/spamd/.spamassassin/auto-whitelist\n";
++        $OUT .= "auto_whitelist_file_mode 750\n";
++    }
+ }
