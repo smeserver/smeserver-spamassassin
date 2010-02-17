@@ -1,17 +1,17 @@
-# $Id: smeserver-spamassassin.spec,v 1.9 2010/02/17 11:53:42 filippocarletti Exp $
+# $Id: smeserver-spamassassin.spec,v 1.10 2010/02/17 17:18:12 filippocarletti Exp $
 
 Summary: SME Server - spamassassin anti-spam module
 %define name smeserver-spamassassin
 Name: %{name}
 %define version 2.2.0
-%define release 3
+%define release 4
 Version: %{version}
 Release: %{release}%{?dist}
 License: GPL
 Group: Networking/Daemons
 Source: %{name}-%{version}.tar.gz
 Patch1: smeserver-spamassassin-2.2.0-ServiceNameFix.patch
-Patch2: smeserver-spamassassin-2.2.0-SA330.patch
+Patch2: smeserver-spamassassin-2.2.0-AWL.patch
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: e-smith-email >= 4.13.0-38
 Requires: headermatch
@@ -41,6 +41,11 @@ AutoReqProv: no
 SME Server - spamassassin anti-spam module
 
 %changelog
+* Wed Feb 17 2010 Filippo Carletti <filippo.carletti@gmail.com> 2.2.0-4sme
+- Requires SpamAssassin 3.3.0 [SME: 5741]
+- Remove FuzzyOcr [SME: 5771]
+- Use ATrpm package (partially remove previous patch)
+
 * Tue Feb 16 2010 Filippo Carletti <filippo.carletti@gmail.com> 2.2.0-3sme
 - Requires SpamAssassin 3.3.0 [SME: 5741]
 - Remove FuzzyOcr [SME: 5771]

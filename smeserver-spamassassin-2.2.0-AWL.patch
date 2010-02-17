@@ -1,0 +1,21 @@
+diff -Naur smeserver-spamassassin-2.2.0-old/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/10paths smeserver-spamassassin-2.2.0/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/10paths
+--- smeserver-spamassassin-2.2.0-old/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/10paths	2008-10-07 16:55:26.000000000 +0200
++++ smeserver-spamassassin-2.2.0/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/10paths	2010-02-16 11:58:32.150953763 +0100
+@@ -1,4 +1,2 @@
+ bayes_path /var/spool/spamd/.spamassassin/bayes
+ bayes_file_mode 750
+-auto_whitelist_path /var/spool/spamd/.spamassassin/auto-whitelist
+-auto_whitelist_file_mode 750
+diff -Naur smeserver-spamassassin-2.2.0-old/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/10use_auto_whitelist smeserver-spamassassin-2.2.0/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/10use_auto_whitelist
+--- smeserver-spamassassin-2.2.0-old/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/10use_auto_whitelist	2008-10-07 16:55:26.000000000 +0200
++++ smeserver-spamassassin-2.2.0/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/10use_auto_whitelist	2010-02-16 11:58:32.151939426 +0100
+@@ -1,3 +1,8 @@
+ {
+-    return "use_auto_whitelist " . ($spamassassin{UseAutoWhitelist} || 0);
++    if (($spamassassin{UseAutoWhitelist} || "0") eq "1")
++    {
++        $OUT = "use_auto_whitelist 1\n";
++        $OUT .= "auto_whitelist_path /var/spool/spamd/.spamassassin/auto-whitelist\n";
++        $OUT .= "auto_whitelist_file_mode 750\n";
++    }
+ }
