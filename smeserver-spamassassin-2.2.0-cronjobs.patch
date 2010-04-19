@@ -1,0 +1,35 @@
+diff -ruN smeserver-spamassassin-2.2.0.old/root/etc/cron.daily/00-sa_keys smeserver-spamassassin-2.2.0/root/etc/cron.daily/00-sa_keys
+--- smeserver-spamassassin-2.2.0.old/root/etc/cron.daily/00-sa_keys	2008-10-07 08:55:26.000000000 -0600
++++ smeserver-spamassassin-2.2.0/root/etc/cron.daily/00-sa_keys	1969-12-31 17:00:00.000000000 -0700
+@@ -1,17 +0,0 @@
+-#!/bin/sh
+-
+-if [ -f /etc/cron.daily/sa_update ]
+-then
+-    install -d -o root -g root -m 600 /etc/mail/spamassassin/sa-update-keys
+-    for key in release-spamassassin.org-key.txt \
+-	       sa-update-openprotect-sare.txt \
+-	       sa-update-pubkey.txt \
+-	       saupdates.openprotect.com-key.txt \
+-	       updates.spamassassin.org-key.txt
+-    do
+-	if [ -f /usr/share/spamassassin/$key ]
+-	then
+-	    /usr/bin/sa-update --import /usr/share/spamassassin/$key
+-	fi
+-    done
+-fi
+diff -ruN smeserver-spamassassin-2.2.0.old/root/etc/cron.daily/zz-sa_restart smeserver-spamassassin-2.2.0/root/etc/cron.daily/zz-sa_restart
+--- smeserver-spamassassin-2.2.0.old/root/etc/cron.daily/zz-sa_restart	2008-10-07 08:55:26.000000000 -0600
++++ smeserver-spamassassin-2.2.0/root/etc/cron.daily/zz-sa_restart	1969-12-31 17:00:00.000000000 -0700
+@@ -1,10 +0,0 @@
+-#!/bin/sh
+-
+-if [ -f /etc/cron.daily/sa_update ]
+-then
+-    N=$(find /var/lib/spamassassin/3.* -type f -newer /service/spamd/supervise/pid)
+-    if test -n "$N"
+-    then
+-        sv t /service/spamd
+-    fi
+-fi
