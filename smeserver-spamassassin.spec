@@ -1,10 +1,10 @@
-# $Id: smeserver-spamassassin.spec,v 1.10 2010/02/17 17:18:12 filippocarletti Exp $
+# $Id: smeserver-spamassassin.spec,v 1.11 2010/04/19 14:24:41 slords Exp $
 
 Summary: SME Server - spamassassin anti-spam module
 %define name smeserver-spamassassin
 Name: %{name}
 %define version 2.2.0
-%define release 4
+%define release 5
 Version: %{version}
 Release: %{release}%{?dist}
 License: GPL
@@ -12,6 +12,7 @@ Group: Networking/Daemons
 Source: %{name}-%{version}.tar.gz
 Patch1: smeserver-spamassassin-2.2.0-ServiceNameFix.patch
 Patch2: smeserver-spamassassin-2.2.0-AWL.patch
+Patch3: smeserver-spamassassin-2.2.0-cronjobs.patch
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: e-smith-email >= 4.13.0-38
 Requires: headermatch
@@ -41,18 +42,23 @@ AutoReqProv: no
 SME Server - spamassassin anti-spam module
 
 %changelog
-* Wed Feb 17 2010 Filippo Carletti <filippo.carletti@gmail.com> 2.2.0-4sme
+* Mon Apr 19 2010 Shad L. Lords <slords@mail.com> 2.2.0-5.sme
+- Remove cron.daily jobs that are no longer needed
+- Previous patch make spamassassin restart correctly [SME: 3304]
+- Newer spamassassin imports keys on install [SME: 5889]
+
+* Wed Feb 17 2010 Filippo Carletti <filippo.carletti@gmail.com> 2.2.0-4.sme
 - Requires SpamAssassin 3.3.0 [SME: 5741]
 - Remove FuzzyOcr [SME: 5771]
 - Use ATrpm package (partially remove previous patch)
 
-* Tue Feb 16 2010 Filippo Carletti <filippo.carletti@gmail.com> 2.2.0-3sme
+* Tue Feb 16 2010 Filippo Carletti <filippo.carletti@gmail.com> 2.2.0-3.sme
 - Requires SpamAssassin 3.3.0 [SME: 5741]
 - Remove FuzzyOcr [SME: 5771]
 - Run sa-update every two hours and check restart every hour
 - Redirect cron job output to logfile to avoid mail noise
 
-* Tue Nov 25 2008 Giacomo Sanchietti <giacomo@nethesis.it> 2.2.0-2sme
+* Tue Nov 25 2008 Giacomo Sanchietti <giacomo@nethesis.it> 2.2.0-2.sme
 - Fix invalid service name in sa-update [SME: 3304]
 
 * Tue Oct 7 2008 Shad L. Lords <slords@mail.com> 2.2.0-1.sme
@@ -383,6 +389,7 @@ SME Server - spamassassin anti-spam module
 %setup
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 perl createlinks
