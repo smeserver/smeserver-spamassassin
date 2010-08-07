@@ -1,0 +1,14 @@
+diff -ruN smeserver-spamassassin-2.2.0.old/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/10required_score smeserver-spamassassin-2.2.0/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/10required_score
+--- smeserver-spamassassin-2.2.0.old/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/10required_score	2008-10-07 15:55:26.000000000 +0100
++++ smeserver-spamassassin-2.2.0/root/etc/e-smith/templates/etc/mail/spamassassin/local.cf/10required_score	2010-08-07 22:42:34.000000000 +0100
+@@ -9,8 +9,8 @@
+ 			'verylow'	=> 9,
+ 			);
+ 
+-    my $hits = ($sens eq 'custom') ? $spamassassin{TagLevel}
+-				   : $sens2hits{$sens};
++    my $hits = ($sens eq 'custom') ? $spamassassin{TagLevel}-.01
++				   : $sens2hits{$sens}-.01;
+ 
+     return "required_score $hits";
+ }

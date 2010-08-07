@@ -1,10 +1,10 @@
-# $Id: smeserver-spamassassin.spec,v 1.11 2010/04/19 14:24:41 slords Exp $
+# $Id: smeserver-spamassassin.spec,v 1.12 2010/08/07 22:03:06 wellsi Exp $
 
 Summary: SME Server - spamassassin anti-spam module
 %define name smeserver-spamassassin
 Name: %{name}
 %define version 2.2.0
-%define release 5
+%define release 6
 Version: %{version}
 Release: %{release}%{?dist}
 License: GPL
@@ -13,6 +13,7 @@ Source: %{name}-%{version}.tar.gz
 Patch1: smeserver-spamassassin-2.2.0-ServiceNameFix.patch
 Patch2: smeserver-spamassassin-2.2.0-AWL.patch
 Patch3: smeserver-spamassassin-2.2.0-cronjobs.patch
+Patch4: smeserver-spamassassin-2.2.0-RequiredScore.patch
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: e-smith-email >= 4.13.0-38
 Requires: headermatch
@@ -42,6 +43,9 @@ AutoReqProv: no
 SME Server - spamassassin anti-spam module
 
 %changelog
+* Sat Aug 7 2010 Ian Wells <esmith@wellsi.com> 2.2.0-6.sme
+- Work around how qpsmtpd tags spam email, by Michael McCarn [SME: 5603]
+
 * Mon Apr 19 2010 Shad L. Lords <slords@mail.com> 2.2.0-5.sme
 - Remove cron.daily jobs that are no longer needed
 - Previous patch make spamassassin restart correctly [SME: 3304]
@@ -390,6 +394,7 @@ SME Server - spamassassin anti-spam module
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %build
 perl createlinks
